@@ -99,6 +99,7 @@ opts = {
     "tooltip": {
         "trigger": "item",
         "triggerOn": "mousemove",
+        # "formatter": "function (params) { return 'Parent: ' + params.name; }",
         # "formatter": "function(){ return 'yash';}"
     },
     "series": [
@@ -106,15 +107,16 @@ opts = {
             "type": "tree",
             "data": [data],
             "top": "1%",
-            "left": "7%",
+            "left": "10%",
             "bottom": "1%",
             "right": "20%",
             "symbolSize": 7,
             "label": {
-                "position": "left",
+                "position": "bottom",
                 "verticalAlign": "middle",
                 "align": "right",
-                "fontSize": 9,
+                "fontSize": 10,
+                "color": "white",
             },
             "leaves": {
                 "label": {
