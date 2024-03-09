@@ -116,7 +116,7 @@ opts = {
                 "verticalAlign": "middle",
                 "align": "right",
                 "fontSize": 10,
-                "color": "white",
+                "color": "black",
             },
             "leaves": {
                 "label": {
