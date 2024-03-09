@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>pydeck</title>
+        <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v1.13.0/mapbox-gl.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+    <script src='https://cdn.jsdelivr.net/npm/@deck.gl/jupyter-widget@~8.8.*/dist/index.js'></script>
+    <style>
+    body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+#deck-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+#deck-container canvas {
+  z-index: 1;
+  background: none;
+}
+    </style>
+  </head>
+  <body>
+    <div id="deck-container">
+    </div>
+  </body>
+  <script>
+    const container = document.getElementById('deck-container');
+    const jsonInput = {
+  "initialViewState": {
+    "bearing": 0,
+    "latitude": 20.5937,
+    "longitude": 78.9629,
+    "pitch": 0,
+    "zoom": 4
+  },
+  "layers": [
+    {
+      "@@type": "TextLayer",
+      "data": [
+        {
+          "coordinates": [
+            77.423,
+            15.2641
+          ],
+          "degree": 0,
+          "name": "DRAVIDIAN"
+        },
+        {
+          "coordinates": [
+            75.963,
+            18.6641
+          ],
+          "degree": 10,
+          "name": "MARATHI"
+        },
+        {
+          "coordinates": [
+            70.833,
+            21.9341
+          ],
+          "degree": 10,
+          "name": "GUJARATI"
+        },
+        {
+          "coordinates": [
+            69.713,
+            23.9341
+          ],
+          "degree": 0,
+          "name": "KACHCHHI"
+        },
+        {
+          "coordinates": [
+            73.303,
+            21.3141
+          ],
+          "degree": 80,
+          "name": "BHILI"
+        },
+        {
+          "coordinates": [
+            72.103,
+            25.4141
+          ],
+          "degree": 60,
+          "name": "GODWARI"
+        },
+        {
+          "coordinates": [
+            72.763,
+            24.9141
+          ],
+          "degree": 50,
+          "name": "SIROHI"
+        },
+        {
+          "coordinates": [
+            74.023,
+            23.8141
+          ],
+          "degree": 30,
+          "name": "MEWARI"
+        },
+        {
+          "coordinates": [
+            74.903,
+            23.0641
+          ],
+          "degree": -10,
+          "name": "VAGDI"
+        },
+        {
+          "coordinates": [
+            74.593,
+            22.4141
+          ],
+          "degree": 0,
+          "name": "MALVI"
+        },
+        {
+          "coordinates": [
+            75.603,
+            21.4141
+          ],
+          "degree": 0,
+          "name": "NIMADI"
+        },
+        {
+          "coordinates": [
+            70.903,
+            26.7141
+          ],
+          "degree": 70,
+          "name": "MARWARI"
+        },
+        {
+          "coordinates": [
+            75.223,
+            26.04141
+          ],
+          "degree": -30,
+          "name": "HARAUTI"
+        },
+        {
+          "coordinates": [
+            74.883,
+            27.4141
+          ],
+          "degree": -10,
+          "name": "DHUNDHARI"
+        },
+        {
+          "coordinates": [
+            77.243,
+            24.8341
+          ],
+          "degree": 60,
+          "name": "BUNDELI"
+        },
+        {
+          "coordinates": [
+            75.313,
+            29.1941
+          ],
+          "degree": -20,
+          "name": "HARYANVI"
+        },
+        {
+          "coordinates": [
+            75.223,
+            28.2141
+          ],
+          "degree": -40,
+          "name": "BAGRI"
+        },
+        {
+          "coordinates": [
+            75.963,
+            27.2641
+          ],
+          "degree": 20,
+          "name": "MEWATI"
+        },
+        {
+          "coordinates": [
+            81.1963,
+            18.6241
+          ],
+          "degree": 10,
+          "name": "HALBI"
+        },
+        {
+          "coordinates": [
+            81.343,
+            19.52641
+          ],
+          "degree": 60,
+          "name": "BHATTI"
+        },
+        {
+          "coordinates": [
+            81.863,
+            21.7641
+          ],
+          "degree": 30,
+          "name": "CHATTISGARHI"
+        },
+        {
+          "coordinates": [
+            84.163,
+            21.07641
+          ],
+          "degree": 10,
+          "name": "ORIYA"
+        },
+        {
+          "coordinates": [
+            85.203,
+            22.5141
+          ],
+          "degree": -10,
+          "name": "SADANI"
+        },
+        {
+          "coordinates": [
+            87.143,
+            24.141
+          ],
+          "degree": 20,
+          "name": "ANGIKA"
+        },
+        {
+          "coordinates": [
+            85.013,
+            23.4641
+          ],
+          "degree": 20,
+          "name": "MAGAHI"
+        },
+        {
+          "coordinates": [
+            86.1013,
+            26.3541
+          ],
+          "degree": -10,
+          "name": "MAITHILI"
+        },
+        {
+          "coordinates": [
+            84.713,
+            26.7241
+          ],
+          "degree": 70,
+          "name": "BAJJIKA"
+        },
+        {
+          "coordinates": [
+            84.013,
+            25.7441
+          ],
+          "degree": 80,
+          "name": "BHOJPURI"
+        },
+        {
+          "coordinates": [
+            79.363,
+            22.3341
+          ],
+          "degree": 30,
+          "name": "BAGHELI"
+        },
+        {
+          "coordinates": [
+            81.913,
+            26.5241
+          ],
+          "degree": 10,
+          "name": "AWADHI"
+        },
+        {
+          "coordinates": [
+            79.593,
+            27.3741
+          ],
+          "degree": 80,
+          "name": "KANNAUJI"
+        },
+        {
+          "coordinates": [
+            77.663,
+            27.4041
+          ],
+          "degree": 40,
+          "name": "BRAJ"
+        },
+        {
+          "coordinates": [
+            88.233,
+            23.1941
+          ],
+          "degree": 10,
+          "name": "BENGALI"
+        },
+        {
+          "coordinates": [
+            91.653,
+            26.34641
+          ],
+          "degree": 0,
+          "name": "ASSAMESE"
+        },
+        {
+          "coordinates": [
+            91.613,
+            25.631
+          ],
+          "degree": 0,
+          "name": "KHASI"
+        },
+        {
+          "coordinates": [
+            77.523,
+            28.5241
+          ],
+          "degree": -10,
+          "name": "KAURAVI"
+        },
+        {
+          "coordinates": [
+            79.523,
+            29.74641
+          ],
+          "degree": 10,
+          "name": "KUMANI"
+        },
+        {
+          "coordinates": [
+            78.223,
+            30.3041
+          ],
+          "degree": 10,
+          "name": "GARHWALI"
+        },
+        {
+          "coordinates": [
+            66.763,
+            25.946
+          ],
+          "degree": 40,
+          "name": "SINDHI"
+        },
+        {
+          "coordinates": [
+            68.613,
+            29.3141
+          ],
+          "degree": 10,
+          "name": "SIRAIKI"
+        },
+        {
+          "coordinates": [
+            73.8473,
+            30.8341
+          ],
+          "degree": 10,
+          "name": "PUNJABI"
+        },
+        {
+          "coordinates": [
+            71.7573,
+            31.3641
+          ],
+          "degree": 10,
+          "name": "SHAHPURI"
+        }
+      ],
+      "getAlignmentBaseline": "center",
+      "getAngle": 0,
+      "getColor": [
+        0,
+        0,
+        0
+      ],
+      "getPosition": "@@=coordinates",
+      "getSize": 16,
+      "getText": "@@=name",
+      "getTextAnchor": "middle",
+      "id": "2d881b14-4413-460d-9e43-58f5036adb43",
+      "pickable": true
+    }
+  ],
+  "mapProvider": "carto",
+  "mapStyle": "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
+  "mapboxKey": "",
+  "views": [
+    {
+      "@@type": "MapView",
+      "controller": true
+    }
+  ]
+};
+    const tooltip = {'text': '{name}\n{language}'};
+    const customLibraries = null;
+    const configuration = null;
+
+    const deckInstance = createDeck({
+                  container,
+      jsonInput,
+      tooltip,
+      customLibraries,
+      configuration
+    });
+
+  </script>
+</html>
