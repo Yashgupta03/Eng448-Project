@@ -32,18 +32,18 @@ r=pdk.Deck(
             get_text_anchor=String("middle"),
             get_alignment_baseline=String("center"),
         ),
-        pdk.Layer(
-            "PathLayer",
-            df1,
-            pickable=True,
-            get_path="path",
-            get_color="color",
-            width_scale=20,
-            width_min_pixels=2,
-            get_width=5,
-        )
+        # pdk.Layer(
+        #     "PathLayer",
+        #     df1,
+        #     pickable=True,
+        #     get_path="path",
+        #     get_color="color",
+        #     width_scale=20,
+        #     width_min_pixels=2,
+        #     get_width=5,
+        # )
     ],
-    tooltip={"html": "<b>Language:</b> {name}"},
+    tooltip={"html": "<b>Language:</b> {val}"},
 )
 
 st.pydeck_chart(r)
