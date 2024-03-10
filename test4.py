@@ -1,38 +1,70 @@
+import streamlit as st
+import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-import cartopy.crs as ccrs
-from netCDF4 import Dataset
+import pydeck as pdk
+from pydeck.types import String
 
-# Load NetCDF data (replace 'your_data.nc' with the actual file name)
-nc_file = 'test4.nc'
-nc_data = Dataset(nc_file, 'r')
+df = pd.read_json("test3.json")
+df1 = pd.read_json("test4.json")
+dict1={'html': 
+       '<b>Language:</b> {val}' 
+       '<div class="piechart">yash</div>'
+       '''<style> 
+		.piechart { 
+			margin-top: 0px; 
+			display: block; 
+			position: absolute; 
+			width: 40px; 
+			height: 40px; 
+			border-radius: 50%; 
+			background-image: {pie}; 
+		} 
 
-# Extract latitude, longitude, and cloud cover data
-# lat = nc_data.variables['latitude'][:]
-print(nc_data.variables)
-print(len(nc_data.variables['latitude']))
-lon = nc_data.variables['longitude'][:]
-cloud_cover = nc_data.variables['ir_brightness_temperature'][:]
+		body, 
+		.piechart { 
+			display: flex; 
+			justify-content: center; 
+			align-items: center; 
+		} 
+	</style>''' 
+       }
+r=pdk.Deck(
+    map_style=None,
+    initial_view_state=pdk.ViewState(
+        latitude=20.5937,
+        longitude=78.9629,
+        zoom=4,
+        pitch=0,
+    ),
+    layers=[
+        pdk.Layer(
+            "TextLayer",
+            df,
+            pickable=True,
+            get_position="coordinates",
+            get_text="name",
+            get_size=16,
+            get_color=[0, 0, 0],
+            get_angle="degree",
+            sdf=True,
+            get_radius=30,
+            # Note that string constants in pydeck are explicitly passed as strings
+            # This distinguishes them from columns in a data set
+            get_text_anchor=String("middle"),
+            get_alignment_baseline=String("center"),
+        ),
+        # pdk.Layer(
+        #     "PathLayer",
+        #     df1,
+        #     pickable=True,
+        #     get_path="path",
+        #     get_color="color",
+        #     width_scale=20,
+        #     width_min_pixels=2,
+        #     get_width=5,
+        # )
+    ],
+    tooltip=dict1,
+)
 
-# Create a 3D plot with Cartopy projection
-# fig = plt.figure(figsize=(10, 8))
-# ax = fig.add_subplot(111, projection=ccrs.PlateCarree())
-
-# # Plot the 3D surface with contourf
-# contourf = ax.contourf(lon, lat, cmap='viridis', transform=ccrs.PlateCarree())
-
-# # Add colorbar
-# cbar = plt.colorbar(contourf, ax=ax, orientation='vertical', pad=0.1, aspect=16, shrink=0.8)
-# cbar.set_label('Cloud Cover')
-
-# # Add labels
-# ax.set_xlabel('Longitude')
-# ax.set_ylabel('Latitude')
-# ax.set_title('3D Cloud Cover Plot on Map')
-
-# # Show the plot
-# plt.show()
-
-# # Close the NetCDF file
-nc_data.close()
+st.pydeck_chart(r)
