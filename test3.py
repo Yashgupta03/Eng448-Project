@@ -8,7 +8,7 @@ df = pd.read_json("test2.json")
 df1 = pd.read_json("test4.json")
 
 r=pdk.Deck(
-    map_style=None,
+     map_style="mapbox://styles/mapbox/light-v9",  #"https://basemaps.cartocdn.com/gl/voyager-nolabels-gl-style/style.json"
     initial_view_state=pdk.ViewState(
         latitude=20.5937,
         longitude=78.9629,
