@@ -12,7 +12,9 @@ r=pdk.Deck(
     initial_view_state=pdk.ViewState(
         latitude=20.5937,
         longitude=78.9629,
-        zoom=4,
+        zoom=5,
+        max_zoom = 5,
+        min_zoom = 5,
         pitch=0,
     ),
     layers=[
