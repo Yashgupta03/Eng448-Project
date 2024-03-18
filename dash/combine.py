@@ -12,6 +12,7 @@ with open('refined.geojson') as response:
     geodata = json.load(response)
 
 app = Dash(__name__)
+app.config.suppress_callback_exceptions=True
 app.layout = html.Div(children=[
     html.Div(className="row", children=[
 
@@ -104,8 +105,8 @@ def generate_tree():
 
 @app.callback(
     Output("dist_lang", "figure"),
-    Input("lang_map", "clickData"),
-    Input("dataframe_dropdown", "value"),
+    [Input("lang_map", "clickData"),
+    Input("dataframe_dropdown", "value")]
     # Input("lang_map", "hoverData"),
     # prevent_initial_call=True,
     # suppress_callback_exceptions=True
@@ -126,12 +127,15 @@ def create_graph(clickData,dataframe_dropdown):
 
 @app.callback(
     Output("state_lang", "figure"),
-    Input("lang_map", "clickData"),
+    [Input("lang_map", "clickData"),
+    Input("dataframe_dropdown", "value")]
     # Input("lang_map", "hoverData"),
     # prevent_initial_call=True,
     # suppress_callback_exceptions=True
 )
-def create_graph(clickData):
+def create_graph(clickData,dataframe_dropdown):
+    if dataframe_dropdown=="show":
+        return 
     print(clickData)
     if clickData is None:
         state_name = "RAJASTHAN"
