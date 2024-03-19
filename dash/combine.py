@@ -5,6 +5,7 @@ import json
 import dash_echarts
 from dash.exceptions import PreventUpdate
 import tree_data
+import numpy as np
 
 df_data=pd.read_csv("data_refined.csv")
 df_lang=pd.read_csv("lang_data.csv")
@@ -18,8 +19,8 @@ app.layout = html.Div(children=[
 
         html.Div(className="six columns", children=[
             dcc.Dropdown(
-                options=["not show","show"],
-                value="show",
+                options=["tree","choro"],
+                value="tree",
                 id="dataframe_dropdown",
                 style={"width": "40%"}
             )
@@ -29,6 +30,12 @@ app.layout = html.Div(children=[
     html.Br(),
 
     html.Div(id="img"),
+    dcc.Dropdown(
+                options=np.append(df_lang['Languages'].dropna().unique(),["NO CHOOSEN",]),
+                value="NO CHOOSEN",
+                id="lang_dropdown",
+                style={"width": "40%"}
+            )
 
 ])
 
@@ -59,6 +66,7 @@ def generate_tree():
         "tooltip": {
             "trigger": "item",
             "triggerOn": "mousemove",
+            'formatter': '{b}'
         },
         "series": [
             {
@@ -103,18 +111,23 @@ def generate_tree():
     )
     return fig
 
+
 @app.callback(
     Output("dist_lang", "figure"),
     [Input("lang_map", "clickData"),
-    Input("dataframe_dropdown", "value")]
+    Input("dataframe_dropdown", "value"),
+    Input("lang_dropdown","value")]
     # Input("lang_map", "hoverData"),
     # prevent_initial_call=True,
     # suppress_callback_exceptions=True
 )
-def create_graph(clickData,dataframe_dropdown):
-    if dataframe_dropdown=="show":
+def create_graph(clickData,dataframe_dropdown,lang_dropdown):
+    if dataframe_dropdown=="tree":
         return 
-    print(clickData)
+    elif lang_dropdown!="NO CHOOSEN" :
+        df1=df_lang[df_lang["Languages"] == lang_dropdown]
+        fig = px.line(df1, x="Districts", y="Languages", markers=True)
+        return fig
     if clickData is None:
         district_name = "GHAZIABAD"
     else:
@@ -126,17 +139,20 @@ def create_graph(clickData,dataframe_dropdown):
     return fig
 
 @app.callback(
+        Output("lang_dropdown","value"),
+        Input("lang_map","clickData")
+)
+def update_prev_click(clickData):
+    return  "NO CHOOSEN"
+
+@app.callback(
     Output("state_lang", "figure"),
     [Input("lang_map", "clickData"),
     Input("dataframe_dropdown", "value")]
-    # Input("lang_map", "hoverData"),
-    # prevent_initial_call=True,
-    # suppress_callback_exceptions=True
 )
-def create_graph(clickData,dataframe_dropdown):
-    if dataframe_dropdown=="show":
+def create_graph1(clickData,dataframe_dropdown):
+    if dataframe_dropdown=="tree":
         return 
-    print(clickData)
     if clickData is None:
         state_name = "RAJASTHAN"
     else:
@@ -154,10 +170,11 @@ def create_graph(clickData,dataframe_dropdown):
     # suppress_callback_exceptions=True
 )
 def update(dataframe_dropdown):
-    if dataframe_dropdown=="show":
+    if dataframe_dropdown=="tree":
         return generate_tree()
     else:
         return generate_choro()
 
 if __name__ == "__main__":
+    print(df_lang['Languages'].unique())
     app.run_server(debug=True)
