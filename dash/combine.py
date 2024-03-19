@@ -124,12 +124,18 @@ def generate_choro_specific():
         [Input("major_lang_dropdown","value")]
 )
 def create_graph2(major_lang_dropdown):
-    df_specific=df_data[df_data["Languages"] == major_lang_dropdown]
+    df_sp1=df_data.copy()
+    df_sp1.loc[df_sp1["Languages"] != major_lang_dropdown, "Languages"] = "NO"
+    color_map={
+        "NO": 'White',
+        major_lang_dropdown : 'Red',
+    }
     fig = px.choropleth_mapbox(
-                    df_specific, 
+                    df_sp1, 
                     geojson = geodata, 
-                    locations = df_specific.Districts, 
-                    color = df_specific["Languages"], 
+                    locations = df_sp1.Districts, 
+                    color = df_sp1["Languages"], 
+                    color_discrete_map=color_map,
                     featureidkey = "properties.District",
                     mapbox_style = "carto-positron",
                     center = {"lat": 22.5937, "lon": 82.9629},
