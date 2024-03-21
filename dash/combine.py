@@ -20,7 +20,7 @@ app.layout = html.Div(children=[
         html.Div(className="six columns", children=[
             dcc.Dropdown(
                 options=["tree","choro","choro_specific"],
-                value="tree",
+                value="choro",
                 id="dataframe_dropdown",
                 style={"width": "40%"}
             )
@@ -28,38 +28,48 @@ app.layout = html.Div(children=[
     ]),
 
     html.Br(),
-
-    html.Div(id="img"),
+    html.Div(id="img")
     
-
 ])
 
 def generate_choro():
+    color_map={
+        "NO": 'Blue',
+        "MARWARI" : 'Green',
+    }
     fig = px.choropleth_mapbox(
                     df_data, 
                     geojson = geodata, 
                     locations = df_data.Districts, 
                     color = df_data["Languages"], 
+                    color_discrete_map=color_map,
                     featureidkey = "properties.District",
                     mapbox_style = "carto-positron",
                     center = {"lat": 22.5937, "lon": 82.9629},
                     hover_name="STATE",
                     hover_data=['STATE'],
                     zoom = 3.0,
-                    opacity = 1.0
+                    opacity = 0.8,
+                    labels={'unemp':'Languages'}
                     )
     fig.update_layout(autosize=False,
                 height=700,
-                width=600,
-                margin={"r":0,"t":0,"l":0,"b":0})
-
-
-    return [dcc.Graph(id="lang_map",figure=fig),html.Br(),dcc.Graph(id="dist_lang",style={'display':'inline-block'}),dcc.Graph(id="state_lang",style={'display':'inline-block'}),dcc.Dropdown(
-                options=np.append(df_lang['Languages'].dropna().unique(),["NO CHOOSEN",]),
+                width=1000,
+                margin={"r":0,"t":0,"l":0,"b":0},
+                )
+    fig.update_traces(marker_line_width=0.3)
+    h_choro=dcc.Graph(id="lang_map",figure=fig)
+    h_g1=dcc.Graph(id="dist_lang")
+    h_g2=dcc.Graph(id="state_lang")
+    h_b1=dcc.Dropdown(options=np.append(df_lang['Languages'].dropna().unique(),["NO CHOOSEN",]),
                 value="NO CHOOSEN",
                 id="lang_dropdown",
                 style={"width": "40%"}
-            )]
+            )
+    h_d1=html.Div([h_choro,html.Br(),h_b1],style={"display":"flex","flexDirection":"column"})
+    h_d2=html.Div([h_g1,h_g2],style={"display":"flex","flexDirection":"column"})
+    h_d3=html.Div([h_d1,h_d2],style={"display":"flex"})
+    return h_d3
 
 def generate_tree():
     opts = {
@@ -125,9 +135,9 @@ def generate_choro_specific():
 )
 def create_graph2(major_lang_dropdown):
     df_sp1=df_data.copy()
-    df_sp1.loc[df_sp1["Languages"] != major_lang_dropdown, "Languages"] = "NO"
+    df_sp1.loc[df_sp1["Languages"] != major_lang_dropdown, "Languages"] = "Not Selected"
     color_map={
-        "NO": 'White',
+        "Not Selected": 'White',
         major_lang_dropdown : 'Red',
     }
     fig = px.choropleth_mapbox(
@@ -138,16 +148,18 @@ def create_graph2(major_lang_dropdown):
                     color_discrete_map=color_map,
                     featureidkey = "properties.District",
                     mapbox_style = "carto-positron",
-                    center = {"lat": 22.5937, "lon": 82.9629},
+                    center = {"lat": 22.5937, "lon": 81.0629},
                     hover_name="STATE",
-                    hover_data=['STATE'],
+                    # hover_data=['STATE'],
                     zoom = 3.0,
-                    opacity = 1.0
+                    opacity = 1.0,
                     )
     fig.update_layout(autosize=False,
-                height=700,
-                width=600,
-                margin={"r":0,"t":0,"l":0,"b":0})
+                height=1000,
+                width=1500,
+                # title="Map for "+major_lang_dropdown,
+                margin={"r":0,"t":100,"l":300,"b":0},
+                )
     return fig
 
 @app.callback(
@@ -173,7 +185,7 @@ def create_graph(clickData,dataframe_dropdown,lang_dropdown):
 
     dff = df_lang[df_lang["Districts"] == district_name]
     fig = px.line(dff, x="Districts", y="Languages", markers=True)
-    fig.update_layout(width=600)
+    # fig.update_layout(width=600)
     return fig
 
 @app.callback(
@@ -198,7 +210,7 @@ def create_graph1(clickData,dataframe_dropdown):
 
     dff = df_data[df_data["STATE"] == state_name]
     fig = px.line(dff, x="Districts", y="Languages", markers=True)
-    fig.update_layout(width=800)
+    # fig.update_layout(width=800)
 
     return fig
 
@@ -216,5 +228,4 @@ def update(dataframe_dropdown):
         return generate_choro_specific()
 
 if __name__ == "__main__":
-    print(df_lang['Languages'].unique())
     app.run_server(debug=True)
