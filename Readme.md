@@ -1,5 +1,5 @@
-This project aims for visualizing Indo-Aryan language family via digitalize and interactive map.
-Directory structure-:
+# This project aims for visualizing Indo-Aryan language family via digitalize and interactive map.
+## Directory structure-:
 1. assets folder-: Contains update.geojson, which is the geo data files containing coordinates for various districts used in this project.
 2. combine.py-: Main file for running the app. Basically contains all the code to generate all the interactive map.
 3. filter.py-: This is the source code for filtering and reducing the refined.geojson and storing it in under assets folder. It is to note that filtering is necessary for faster rendering and also as this code also capitalize all the names which exist in refined.geojson.
@@ -14,17 +14,17 @@ Directory structure-:
 12. physical_streamlit.html-: physical map file, can be opened by double clicking on it as it is just a normal html file, generated from physical_streamlit.py
 13. coordinates.js-: File to generate randome samples for coordinate, See NOTE section below to understand it better.
 
-Instructions to use it:
+## Instructions to use it:
 1. First install all the requirements as mentioned in requirement.txt
 2. Then come inside Final directory by using command: cd Final
 3. Then launch the app by: python combine.py
 4. There in terminal comes a link for local host. ctrl+click or copy and paste in any browser to launch it.
 
-Instructions to change data files:
+## Instructions to change data files:
 1. To change coordinate file, change only refined.geojson, then filter it via filter.py
 2. To change major language spoken-: Change data_refined.csv
 3. To change sub-dialects of a language-: change lang_dialects.csv
 4. To change lines of physical map-: change indo_aryan_boundaries.json file
 5. To change orientation and location of languages in physical map-: change physical_languages.json file
 
-NOTE-: To find the coordinates for any line use-: https://codepen.io/jhawes/pen/xxBVZY?editors=1111 link to generate random samples and change its javascript(js) code with coordinates.js
+**NOTE-:** To find the coordinates for any line use-: https://codepen.io/jhawes/pen/xxBVZY?editors=1111 link to generate random samples and change its javascript(js) code with coordinates.js
