@@ -12,7 +12,7 @@
 10. physical_languages.json-: Data file containing position and degree value for various languages which are displayed in physical map.
 11. refined.geojson-: Original data coordinate file for various districts. Change this file as it is much easy to with this file and then filter it to get update.geojson. REFER to point 3.
 12. physical_streamlit.html-: physical map file, can be opened by double clicking on it as it is just a normal html file, generated from physical_streamlit.py
-13. coordinates.js-: File to generate randome samples for coordinate, See NOTE section below to understand it better.
+13. coordinates.js-: File to generate random samples for coordinate, See NOTE section below to understand it better.
 
 ## Instructions to use it:
 1. First install all the requirements as mentioned in requirement.txt
